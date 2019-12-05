@@ -8,20 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		98C637C22399B9420072D749 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637C12399B9420072D749 /* AppDelegate.swift */; };
-		98C637C42399B9420072D749 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637C32399B9420072D749 /* ViewController.swift */; };
+		98C637C42399B9420072D749 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637C32399B9420072D749 /* MainViewController.swift */; };
 		98C637C72399B9420072D749 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C637C52399B9420072D749 /* Main.storyboard */; };
 		98C637C92399B9440072D749 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C637C82399B9440072D749 /* Assets.xcassets */; };
 		98C637CC2399B9440072D749 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C637CA2399B9440072D749 /* LaunchScreen.storyboard */; };
+		98C637DC2399BA900072D749 /* GitUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637DB2399BA900072D749 /* GitUser.swift */; };
+		98C637DE2399BA9D0072D749 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637DD2399BA9D0072D749 /* ViewModel.swift */; };
+		98C637E12399BAC30072D749 /* MainTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637DF2399BAC30072D749 /* MainTableCell.swift */; };
+		98C637E22399BAC30072D749 /* MainTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98C637E02399BAC30072D749 /* MainTableCell.xib */; };
+		98C637E42399BB040072D749 /* GitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637E32399BB040072D749 /* GitAPI.swift */; };
+		98C637E62399BB130072D749 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637E52399BB130072D749 /* GitService.swift */; };
+		98C637E82399BB1E0072D749 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637E72399BB1E0072D749 /* CacheManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		98C637BE2399B9420072D749 /* T-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "T-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C637C12399B9420072D749 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		98C637C32399B9420072D749 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		98C637C32399B9420072D749 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		98C637C62399B9420072D749 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98C637C82399B9440072D749 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98C637CB2399B9440072D749 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98C637CD2399B9440072D749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98C637DB2399BA900072D749 /* GitUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUser.swift; sourceTree = "<group>"; };
+		98C637DD2399BA9D0072D749 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		98C637DF2399BAC30072D749 /* MainTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableCell.swift; sourceTree = "<group>"; };
+		98C637E02399BAC30072D749 /* MainTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableCell.xib; sourceTree = "<group>"; };
+		98C637E32399BB040072D749 /* GitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitAPI.swift; sourceTree = "<group>"; };
+		98C637E52399BB130072D749 /* GitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitService.swift; sourceTree = "<group>"; };
+		98C637E72399BB1E0072D749 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +68,85 @@
 		98C637C02399B9420072D749 /* T-Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				98C637DA2399BA580072D749 /* Model */,
+				98C637D92399BA510072D749 /* ViewModel */,
+				98C637D82399BA4D0072D749 /* View */,
+				98C637D72399BA440072D749 /* ViewController */,
+				98C637D62399BA3E0072D749 /* Storyboard */,
+				98C637D52399BA380072D749 /* Service */,
+				98C637D42399BA310072D749 /* Extension */,
+				98C637D32399BA290072D749 /* Helper */,
 				98C637C12399B9420072D749 /* AppDelegate.swift */,
-				98C637C32399B9420072D749 /* ViewController.swift */,
-				98C637C52399B9420072D749 /* Main.storyboard */,
-				98C637C82399B9440072D749 /* Assets.xcassets */,
-				98C637CA2399B9440072D749 /* LaunchScreen.storyboard */,
 				98C637CD2399B9440072D749 /* Info.plist */,
 			);
 			path = "T-Mobile";
+			sourceTree = "<group>";
+		};
+		98C637D32399BA290072D749 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		98C637D42399BA310072D749 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		98C637D52399BA380072D749 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				98C637E32399BB040072D749 /* GitAPI.swift */,
+				98C637E52399BB130072D749 /* GitService.swift */,
+				98C637E72399BB1E0072D749 /* CacheManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		98C637D62399BA3E0072D749 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				98C637C52399B9420072D749 /* Main.storyboard */,
+				98C637CA2399B9440072D749 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		98C637D72399BA440072D749 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				98C637C32399B9420072D749 /* MainViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		98C637D82399BA4D0072D749 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				98C637DF2399BAC30072D749 /* MainTableCell.swift */,
+				98C637E02399BAC30072D749 /* MainTableCell.xib */,
+				98C637C82399B9440072D749 /* Assets.xcassets */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		98C637D92399BA510072D749 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				98C637DD2399BA9D0072D749 /* ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		98C637DA2399BA580072D749 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				98C637DB2399BA900072D749 /* GitUser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +210,7 @@
 				98C637CC2399B9440072D749 /* LaunchScreen.storyboard in Resources */,
 				98C637C92399B9440072D749 /* Assets.xcassets in Resources */,
 				98C637C72399B9420072D749 /* Main.storyboard in Resources */,
+				98C637E22399BAC30072D749 /* MainTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +221,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C637C42399B9420072D749 /* ViewController.swift in Sources */,
+				98C637E12399BAC30072D749 /* MainTableCell.swift in Sources */,
+				98C637E42399BB040072D749 /* GitAPI.swift in Sources */,
+				98C637C42399B9420072D749 /* MainViewController.swift in Sources */,
+				98C637DC2399BA900072D749 /* GitUser.swift in Sources */,
+				98C637E82399BB1E0072D749 /* CacheManager.swift in Sources */,
+				98C637E62399BB130072D749 /* GitService.swift in Sources */,
+				98C637DE2399BA9D0072D749 /* ViewModel.swift in Sources */,
 				98C637C22399B9420072D749 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
