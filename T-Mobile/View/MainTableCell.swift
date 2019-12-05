@@ -10,15 +10,8 @@ import UIKit
 
 class MainTableCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    //Easy to reference identifier for use in other ViewControllers
+    static let identifier = "MainTableCell"
+    
     
 }
