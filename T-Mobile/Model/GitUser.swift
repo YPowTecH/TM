@@ -8,11 +8,13 @@
 
 import Foundation
 
-struct GitResponse: Decodable {
+struct GitUserResults: Decodable {
     let result: [GitUser]
+    let totalResults: Int
     
     private enum CodingKeys: String, CodingKey {
         case result = "items"
+        case totalResults = "total_count"
     }
 }
 

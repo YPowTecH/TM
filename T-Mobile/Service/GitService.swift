@@ -9,14 +9,21 @@
 import Foundation
 
 enum GitUsersResponse {
-    case valid([GitUser])
+    case valid(GitUserResults)
+    case empty
+    case error(Error)
+}
+
+enum GitReposResponse {
+    case valid([GitRepo])
     case empty
     case error(Error)
 }
 
 typealias GitUsersHandler = (GitUsersResponse) -> Void
+typealias GitReposHandler = (GitReposResponse) -> Void
 
-let GS = GitService.shared
+let gService = GitService.shared
 
 //Git Service
 final class GitService {
@@ -44,8 +51,8 @@ final class GitService {
             
             if let data = dat {
                 do {
-                    let gitUsers = try JSONDecoder().decode(GitResponse.self, from: data)
-                    completion(.valid(gitUsers.result))
+                    let gitUserResults = try JSONDecoder().decode(GitUserResults.self, from: data)
+                    completion(.valid(gitUserResults))
                 } catch let myError {
                     print("Couldn't Decode JSON: \(myError.localizedDescription)")
                     completion(.error(myError))
@@ -59,7 +66,7 @@ final class GitService {
     //Get [git user's repos] Data
     //-------------------
     func getGitRepos(search: String,
-                     completion: @escaping GitUsersHandler) {
+                     completion: @escaping GitReposHandler) {
         guard let url = GitAPI().getGitRepos(user: search) else {
             completion(.empty)
             return
@@ -75,14 +82,14 @@ final class GitService {
             
             if let data = dat {
                 do {
-                    let gitUsers = try JSONDecoder().decode(GitResponse.self, from: data)
-                    completion(.valid(gitUsers.result))
+                    let gitRepos = try JSONDecoder().decode([GitRepo].self, from: data)
+                    completion(.valid(gitRepos))
                 } catch let myError {
                     print("Couldn't Decode JSON: \(myError.localizedDescription)")
                     completion(.error(myError))
                     return
                 }
             }
-            }.resume()
+        }.resume()
     }
 }
