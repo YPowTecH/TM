@@ -22,6 +22,13 @@ class MainTableCell: UITableViewCell {
         didSet {
             cellUsername.text = user.username
             
+            user.getRepoCount() { [weak self] count in
+                DispatchQueue.main.async {
+                    self?.cellRepoCount.text = "Repos: " + String(count ?? 0)
+                }
+                
+            }
+            
             if user.img != nil {
                 user.getImg() { [weak self] img in
                     DispatchQueue.main.async {

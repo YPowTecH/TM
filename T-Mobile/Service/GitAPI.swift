@@ -32,12 +32,34 @@ struct GitAPI {
     /*
         https://api.github.com/
         users/
+    */
+    func getGitUser(user: String) -> URL? {
+        let kUser = "users/" + user
+        
+        return URL(string: BASE + kUser)
+    }
+    
+    
+    /*
+        https://api.github.com/
+        users/
         /repos
-     */
-    func getGitRepos(user: String) -> URL? {
+        ?per_page=
+    */
+    func getGitRepos(user: String, limit: Int = 0) -> URL? {
         let kUser = "users/" + user
         let kRepo = "/repos"
+        var kLimit = "?per_page="
         
-        return URL(string: BASE + kUser + kRepo)
+        //for getting repo count
+        if limit > 0 {
+            kLimit += String(limit)
+        }
+        //for getting actual repos
+        else {
+            kLimit += String(LIMIT)
+        }
+        
+        return URL(string: BASE + kUser + kRepo + kLimit)
     }
 }

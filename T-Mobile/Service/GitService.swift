@@ -21,6 +21,7 @@ enum GitReposResponse {
 }
 
 typealias GitUsersHandler = (GitUsersResponse) -> Void
+typealias GitRepoCount = (Int) -> Void
 typealias GitReposHandler = (GitReposResponse) -> Void
 
 let gService = GitService.shared
@@ -61,6 +62,38 @@ final class GitService {
             }
         }.resume()
     }
+    
+    //-------------------
+    //Get [git user's repo count] Data
+    //-------------------
+    func getGitRepoCount(user: String,
+                         completion: @escaping GitRepoCount) {
+        guard let url = GitAPI().getGitRepos(user: user, limit: 1) else {
+            completion(0)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (dat, resp, err) in
+            if let error = err {
+                print("Bad Task: \(error.localizedDescription)")
+                completion(0)
+                return
+            }
+            
+            if let resp = resp as? HTTPURLResponse {
+                let header = resp.allHeaderFields
+                if let link = header["Link"] as? String,
+                    let last = link.components(separatedBy: ",").last,
+                    let url = last.components(separatedBy: "&page=").last,
+                    let numStr = url.components(separatedBy: ">").first,
+                    let count = Int(numStr) {
+                    completion(count)
+                }
+                print(header)
+            }
+        }.resume()
+    }
+    
     
     //-------------------
     //Get [git user's repos] Data

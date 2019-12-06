@@ -9,7 +9,7 @@
 import UIKit
 
 struct GitUserResults: Decodable {
-    let result: [GitUser]
+    var result: [GitUser]
     let totalResults: Int
     
     private enum CodingKeys: String, CodingKey {
@@ -29,15 +29,25 @@ class GitUser: Decodable {
     let joinDate: String?
     let repos: [GitRepo]?
     
+    init(name: String) {
+        self.username = name
+        img = nil
+        followers = nil
+        following = nil
+        bio = nil
+        email = nil
+        location = nil
+        joinDate = nil
+        repos = nil
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case username = "login"
         case img = "avatar_url"
         case joinDate = "created_at"
         case followers, following, bio, email, location, repos
     }
-    
-    //TODO: get repo count
-    //TODO: get image
+
     func getImg(completion: @escaping (UIImage?) -> Void) {
         guard let img = self.img else { return }
         
@@ -50,6 +60,12 @@ class GitUser: Decodable {
             case .empty:
                 completion(UIImage(imageLiteralResourceName: "404s"))
             }
+        }
+    }
+    
+    func getRepoCount(completion: @escaping (Int?) -> Void) {
+        gService.getGitRepoCount(user: username) { response in
+            completion(response)
         }
     }
 }
