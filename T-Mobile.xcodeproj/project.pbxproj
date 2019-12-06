@@ -21,6 +21,7 @@
 		98C637E82399BB1E0072D749 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637E72399BB1E0072D749 /* CacheManager.swift */; };
 		98C637EA2399BD050072D749 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637E92399BD050072D749 /* DetailViewController.swift */; };
 		98C637EE2399BE010072D749 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637ED2399BE010072D749 /* MasterViewController.swift */; };
+		98C637F02399D20B0072D749 /* GitRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C637EF2399D20B0072D749 /* GitRepo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		98C637E72399BB1E0072D749 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		98C637E92399BD050072D749 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		98C637ED2399BE010072D749 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		98C637EF2399D20B0072D749 /* GitRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				98C637DB2399BA900072D749 /* GitUser.swift */,
+				98C637EF2399D20B0072D749 /* GitRepo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				98C637EE2399BE010072D749 /* MasterViewController.swift in Sources */,
 				98C637EA2399BD050072D749 /* DetailViewController.swift in Sources */,
 				98C637E12399BAC30072D749 /* MainTableCell.swift in Sources */,
+				98C637F02399D20B0072D749 /* GitRepo.swift in Sources */,
 				98C637E42399BB040072D749 /* GitAPI.swift in Sources */,
 				98C637C42399B9420072D749 /* MainViewController.swift in Sources */,
 				98C637DC2399BA900072D749 /* GitUser.swift in Sources */,

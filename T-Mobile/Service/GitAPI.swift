@@ -28,4 +28,16 @@ struct GitAPI {
         
         return URL(string: BASE + search + kQ + kPage + kLimit)
     }
+    
+    /*
+        https://api.github.com/
+        users/
+        /repos
+     */
+    func getGitRepos(user: String) -> URL? {
+        let kUser = "users/" + user
+        let kRepo = "/repos"
+        
+        return URL(string: BASE + kUser + kRepo)
+    }
 }
