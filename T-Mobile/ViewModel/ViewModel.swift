@@ -46,6 +46,12 @@ class ViewModel {
             return
         }
         
+        if searchTerm == "" {
+            gUsers = []
+            totalGitUsers = 0
+            return
+        }
+        
         if !bottomOfList {
             getSearchResults(search: search)
         }
@@ -55,12 +61,14 @@ class ViewModel {
         }
     }
     
+    //helper function to utilize our specalized searching needs
     private func getSearchResults(search: String, page: Int = 1, addon: Bool = false) {
         gService.getGitUsers(search: search, page: page) { [weak self] response in
             self?.setupGitUsersArr(response: response, addon: addon)
         }
     }
     
+    //Helper function to manage the array better with inf scrolling
     private func setupGitUsersArr(response: GitUsersResponse, addon: Bool) {
         switch response {
         case .valid(let results):

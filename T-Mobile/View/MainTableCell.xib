@@ -53,6 +53,11 @@
                 <constraint firstItem="3Xd-Xh-Amc" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" id="oe0-cd-887"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellImg" destination="2Ej-Yc-55l" id="TKi-RP-aCK"/>
+                <outlet property="cellRepoCount" destination="3Xd-Xh-Amc" id="c73-s8-OH7"/>
+                <outlet property="cellUsername" destination="KcU-mp-epv" id="zdB-4R-sef"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="125.55803571428571"/>
         </tableViewCell>
     </objects>

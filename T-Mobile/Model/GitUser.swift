@@ -6,7 +6,7 @@
 //  Copyright © 2019 Chris. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct GitUserResults: Decodable {
     let result: [GitUser]
@@ -38,4 +38,18 @@ class GitUser: Decodable {
     
     //TODO: get repo count
     //TODO: get image
+    func getImg(completion: @escaping (UIImage?) -> Void) {
+        guard let img = self.img else { return }
+        
+        cache.downloadFrom(endpoint: img) { response in
+            switch response {
+            case .valid(let dat):
+                completion(UIImage(data: dat))
+            case .error(_):
+                completion(UIImage(imageLiteralResourceName: "404s"))
+            case .empty:
+                completion(UIImage(imageLiteralResourceName: "404s"))
+            }
+        }
+    }
 }
