@@ -3,4 +3,81 @@
    uuid = "F6E51BB0-244C-41C2-A255-A82B0942DFFE"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "45077338-0795-467F-8605-9962E69349B6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "T-Mobile/Model/GitUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "init(name:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "45077338-0795-467F-8605-9962E69349B6 - dfcd19ba68036bc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "T_Mobile.GitUser.__allocating_init(name: Swift.String) -&gt; T_Mobile.GitUser"
+                  moduleName = "T-Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/csonet/Desktop/IOS/Coding%20Challenges/T-Mobile/T-Mobile/Model/GitUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "45077338-0795-467F-8605-9962E69349B6 - cde4cc53414b9f0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "T_Mobile.GitUser.init(name: Swift.String) -&gt; T_Mobile.GitUser"
+                  moduleName = "T-Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/csonet/Desktop/IOS/Coding%20Challenges/T-Mobile/T-Mobile/Model/GitUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            uuid = "5878293B-F075-4A30-8DAB-F6124BE1C5B4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "1"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0A57642-0275-4A69-884B-8E29E0A4F414"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "T-Mobile/ViewController/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

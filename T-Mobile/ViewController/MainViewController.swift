@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var viewModel = ViewModel() {
+    var viewModel = GUsersViewModel() {
         didSet {
             if let _ = viewModel.error {
                 self.showAlert("oops")
@@ -27,6 +27,8 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    var shownCount: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +70,7 @@ class MainViewController: UIViewController {
         //Refresh Button
         //----------------------------
         searchController.searchBar.showsBookmarkButton = true
-        searchController.searchBar.setImage(UIImage(named: "refresh"), for: .bookmark, state: .normal)
+   //     searchController.searchBar.setImage(UIImage(named: "refresh"), for: .bookmark, state: .normal)
         //----------------------------
         
         //----------------------------
@@ -76,6 +78,7 @@ class MainViewController: UIViewController {
         //----------------------------
         navigationItem.titleView = searchController.searchBar
         //----------------------------
+        mainTableView.prefetchDataSource = self
     }
     
     //get an updated api call on refresh button click
@@ -147,9 +150,23 @@ extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //TODO:Show/goto Details Page
-        //viewModel.currentArticle = indexPath.row
-        //goToDetail(with: viewModel)
+        
+        /*let characters = isFiltering ?
+            viewModel.filteredCharacters : viewModel.getCharactersAt(indexPath.section)
+        let character = characters[indexPath.row]
+        
+        viewModel.detailDelegate?.update(character)
+        
+        if let detailViewController = viewModel.detailDelegate as? DetailViewController, let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        }*/
+        
+        let user = viewModel.gUsers[indexPath.row]
+        let vm = SingleGUserViewModel(user)
+        viewModel.detailDelegate?.detailUpdate(vm)
+        if let detailViewController = viewModel.detailDelegate as? DetailViewController, let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        }
     }
 }
 //----------------------------
@@ -196,7 +213,27 @@ extension MainViewController: MainDelegate {
     func mainUpdate() {
         DispatchQueue.main.async {
             self.mainTableView.reloadData()
+            /*
+            let count = self.viewModel.gUsers.count
+            var paths = [IndexPath]()
+            for i in self.shownCount..<count {
+                paths.append(IndexPath(row: i, section: 0))
+            }
+            self.mainTableView.insertRows(at: paths, with: .automatic)
+            
+            self.shownCount = count*/
+            
         }
     }
 }
 //----------------------------
+
+extension MainViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let smallest = indexPaths.first?.row else { return }
+        let count = self.viewModel.gUsers.count - 5
+        if count < smallest {
+            viewModel.getMore()
+        }
+    }
+}

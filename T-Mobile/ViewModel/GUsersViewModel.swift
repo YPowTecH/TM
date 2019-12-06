@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  GUsersViewModel.swift
 //  T-Mobile
 //
 //  Created by Chris Sonet on 12/5/19.
@@ -13,10 +13,10 @@ protocol MainDelegate: class {
 }
 
 protocol DetailDelegate: class {
-    func detailUpdate(_ gUser: GitUser)
+    func detailUpdate(_ viewModel: SingleGUserViewModel)
 }
 
-class ViewModel {
+class GUsersViewModel {
 
     weak var mainDelegate: MainDelegate?
     weak var detailDelegate: DetailDelegate?
@@ -28,6 +28,8 @@ class ViewModel {
             mainDelegate?.mainUpdate()
         }
     }
+    
+    var currentGUser: GitUser?
     
     //for inf scrolling need to know how many users
     //  we can scroll through before we hit the end
@@ -59,6 +61,12 @@ class ViewModel {
             let p = ((gUsers.count / 20) + 1)
             getSearchResults(search: search, page: p, addon: true)
         }
+    }
+    
+    func getMore() {
+        guard let searchTerm = searchTerm else { return }
+        let p = ((gUsers.count / 20) + 1)
+        getSearchResults(search: searchTerm, page: p, addon: true)
     }
     
     //helper function to utilize our specalized searching needs

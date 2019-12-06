@@ -21,7 +21,7 @@ enum GitReposResponse {
 }
 
 typealias GitUsersHandler = (GitUsersResponse) -> Void
-typealias GitRepoCount = (Int) -> Void
+typealias GitRepoInfo = (GitUserInfo?) -> Void
 typealias GitReposHandler = (GitReposResponse) -> Void
 
 let gService = GitService.shared
@@ -31,6 +31,7 @@ final class GitService {
     static let shared = GitService()
     
     var requestsInProgress = Set<String>()
+    var fetchMore: Bool = false
     
     private init() {}
     
@@ -40,12 +41,16 @@ final class GitService {
     func getGitUsers(search: String,
                      page: Int,
                      completion: @escaping GitUsersHandler) {
+        if fetchMore == true { return }
+        fetchMore = true
         guard let url = GitAPI().getGitUsers(q: search, page: page) else {
             completion(.empty)
+            fetchMore = false
             return
         }
         
         URLSession.shared.dataTask(with: url) { (dat, _, err) in
+            defer { self.fetchMore = false }
             //shouldn't have any bad urls
             if let error = err {
                 print("Bad Task: \(error.localizedDescription)")
@@ -69,18 +74,18 @@ final class GitService {
     //-------------------
     //Get [git user's repo count] Data
     //-------------------
-    func getGitRepoCount(user: String,
-                         completion: @escaping GitRepoCount) {
+    func getUserInformation(user: String,
+                         completion: @escaping GitRepoInfo) {
         // if we are already doing this request, don't process another one.
         if requestsInProgress.contains(user) {
             return
         }
-        
-        guard let url = GitAPI().getGitRepos(user: user, limit: 1) else {
-            completion(0)
+        guard let url = GitAPI().getGitUser(user: user) else {
+            completion(nil)
             return
         }
-
+        
+        print(url)
         requestsInProgress.insert(user)
         URLSession.shared.dataTask(with: url) { (dat, resp, err) in
             defer {
@@ -88,19 +93,13 @@ final class GitService {
             }
             if let error = err {
                 print("Bad Task: \(error.localizedDescription)")
-                completion(0)
+                completion(nil)
                 return
             }
-            
-            if let resp = resp as? HTTPURLResponse {
-                let header = resp.allHeaderFields
-                if let link = header["Link"] as? String,
-                    let last = link.components(separatedBy: ",").last,
-                    let url = last.components(separatedBy: "&page=").last,
-                    let numStr = url.components(separatedBy: ">").first,
-                    let count = Int(numStr) {
-                    completion(count)
-                }
+            if let dat = dat {
+                let info = try! JSONDecoder().decode(GitUserInfo.self, from: dat)
+                print("success")
+                completion(info)
             }
         }.resume()
     }
@@ -109,6 +108,7 @@ final class GitService {
     //-------------------
     //Get [git user's repos] Data
     //-------------------
+    /*
     func getGitRepos(search: String,
                      completion: @escaping GitReposHandler) {
         guard let url = GitAPI().getGitRepos(user: search) else {
@@ -135,5 +135,36 @@ final class GitService {
                 }
             }
         }.resume()
+    }*/
+    
+    //-------------------
+    //Get [git user's repos] Data
+    //-------------------
+    func getGitRepos(user: String, search: String, completion: @escaping GitReposHandler) {
+        guard let url = GitAPI().getGitRepos(user: user, search: search) else {
+            completion(.empty)
+            return
+        }
+        
+        //shouldn't have any bad urls
+        URLSession.shared.dataTask(with: url) { (dat, _, err) in
+            if let error = err {
+                print("Bad Task: \(error.localizedDescription)")
+                completion(.error(error))
+                return
+            }
+      
+            if let data = dat {
+                do {
+                    let gitRepos = try JSONDecoder().decode(GitRepoResult.self, from: data)
+                    completion(.valid(gitRepos.items))
+                } catch let myError {
+                    print("Couldn't Decode JSON: \(myError.localizedDescription)")
+                    completion(.error(myError))
+                    return
+                }
+            }
+        }.resume()
     }
 }
+

@@ -18,35 +18,83 @@ struct GitUserResults: Decodable {
     }
 }
 
+struct Formatters {
+    enum FormatterError: Error {
+        case invalidDate
+    }
+    private static var makeDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        return f
+    }()
+    private static var makeStringFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        return f
+    }()
+
+    static func makeDate(from string: String) -> Date? {
+        return makeDateFormatter.date(from: string)
+    }
+    static func makeString(from date: Date) -> String {
+        return makeStringFormatter.string(from: date)
+    }
+}
+
+struct GitUserInfo: Decodable {
+    let bio: String?
+    let email: String?
+    let followers: Int
+    let following: Int
+    let location: String?
+    let joinDate: String
+    var repoCount: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case bio, email, followers, following, location
+        case repoCount = "public_repos"
+        case joinDate = "created_at"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        bio = try container.decodeIfPresent(String.self, forKey: .bio)
+        email = try container.decodeIfPresent(String.self, forKey: .email)
+        followers = try container.decode(Int.self, forKey: .followers)
+        following = try container.decode(Int.self, forKey: .following)
+        location = try container.decodeIfPresent(String.self, forKey: .location)
+        let joinDateStr = try container.decode(String.self, forKey: .joinDate)
+        repoCount = try container.decode(Int.self, forKey: .repoCount)
+        guard let date = Formatters.makeDate(from: joinDateStr) else {
+            throw Formatters.FormatterError.invalidDate
+        }
+        joinDate = Formatters.makeString(from: date)
+    }
+}
+
 class GitUser: Decodable {
     let username: String
     let img: String?
-    let followers: Int?
-    let following: Int?
-    let bio: String?
-    let email: String?
-    let location: String?
-    let joinDate: String?
     var repos: [GitRepo] = []
-    var repoCount: Int? = nil
+    var info: GitUserInfo? = nil
+    var repoCount: Int? {
+        set {
+            info?.repoCount = newValue ?? 0
+        }
+        get {
+            return info?.repoCount
+        }
+    }
     
     //TODO: DElete later was for testing
     init(name: String) {
         self.username = name
         img = nil
-        followers = nil
-        following = nil
-        bio = nil
-        email = nil
-        location = nil
-        joinDate = nil
     }
     
     private enum CodingKeys: String, CodingKey {
         case username = "login"
         case img = "avatar_url"
-        case joinDate = "created_at"
-        case followers, following, bio, email, location
     }
 
     func getImg(completion: @escaping (UIImage?) -> Void) {
@@ -69,9 +117,9 @@ class GitUser: Decodable {
             completion(rCount)
         }
         else {
-            gService.getGitRepoCount(user: self.username) { response in
-                self.repoCount = response
-                completion(response)
+            gService.getUserInformation(user: self.username) { response in
+                self.info = response
+                completion(self.repoCount ?? 0)
             }
         }
     }
