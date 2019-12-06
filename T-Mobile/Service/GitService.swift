@@ -29,6 +29,9 @@ let gService = GitService.shared
 //Git Service
 final class GitService {
     static let shared = GitService()
+    
+    var requestsInProgress = Set<String>()
+    
     private init() {}
     
     //-------------------
@@ -68,12 +71,21 @@ final class GitService {
     //-------------------
     func getGitRepoCount(user: String,
                          completion: @escaping GitRepoCount) {
+        // if we are already doing this request, don't process another one.
+        if requestsInProgress.contains(user) {
+            return
+        }
+        
         guard let url = GitAPI().getGitRepos(user: user, limit: 1) else {
             completion(0)
             return
         }
-        
+
+        requestsInProgress.insert(user)
         URLSession.shared.dataTask(with: url) { (dat, resp, err) in
+            defer {
+                self.requestsInProgress.remove(user)
+            }
             if let error = err {
                 print("Bad Task: \(error.localizedDescription)")
                 completion(0)
@@ -89,7 +101,6 @@ final class GitService {
                     let count = Int(numStr) {
                     completion(count)
                 }
-                print(header)
             }
         }.resume()
     }

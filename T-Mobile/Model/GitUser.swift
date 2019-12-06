@@ -27,8 +27,10 @@ class GitUser: Decodable {
     let email: String?
     let location: String?
     let joinDate: String?
-    let repos: [GitRepo]?
+    var repos: [GitRepo] = []
+    var repoCount: Int? = nil
     
+    //TODO: DElete later was for testing
     init(name: String) {
         self.username = name
         img = nil
@@ -38,14 +40,13 @@ class GitUser: Decodable {
         email = nil
         location = nil
         joinDate = nil
-        repos = nil
     }
     
     private enum CodingKeys: String, CodingKey {
         case username = "login"
         case img = "avatar_url"
         case joinDate = "created_at"
-        case followers, following, bio, email, location, repos
+        case followers, following, bio, email, location
     }
 
     func getImg(completion: @escaping (UIImage?) -> Void) {
@@ -64,8 +65,14 @@ class GitUser: Decodable {
     }
     
     func getRepoCount(completion: @escaping (Int?) -> Void) {
-        gService.getGitRepoCount(user: username) { response in
-            completion(response)
+        if let rCount = self.repoCount {
+            completion(rCount)
+        }
+        else {
+            gService.getGitRepoCount(user: self.username) { response in
+                self.repoCount = response
+                completion(response)
+            }
         }
     }
 }
